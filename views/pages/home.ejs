@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/header.ejs') %>
+    <body class="bg-gray-100 text-center">
+        
+        <!-- Navbar -->
+        <%- include('../partials/navbar.ejs') %>
+
+        <!-- Main Content-->
+        <main>
+
+            <!--! Hero Section -->
+            <section class="relative text-white py-20 px-4 text-center overflow-hidden">
+                <!-- Background pattern and gradient -->
+                <div class="bg-gray-900 absolute inset-0 z-0 bg-[url('/images/honeycomb.svg')] bg-no-repeat bg-center bg-cover">
+                    <!-- Gradient overlay on top of the background -->
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900"></div>
+                </div>
+
+                <div class="max-w-4xl mx-auto relative z-10">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Welcome to Chemten</h1>
+                        <p class="text-lg md:text-xl text-gray-300 mb-8">
+                            Flexible, on-demand synthesis of rare and specialty organic compounds.
+                        </p>
+                    
+                    <!-- Search & Browse -->
+                    <div class="flex flex-col md:flex-col items-center justify-center gap-4 max-w-xl mx-auto">
+                        <div class="relative w-full md:flex-1">
+                            <input type="text" placeholder="Search by name or CAS number"
+                                class="w-full pr-12 pl-4 py-2 rounded-md border border-gray-600 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-[#024caa]" />
+                            <button type="button" class="absolute inset-y-0 right-0 px-4 py-2 bg-[#024caa] text-white rounded-md flex items-center justify-center hover:bg-[#023b8a] focus:outline-none">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m1.47-5.4a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="text-gray-500">or</span>
+                        <a href="/products" class="bg-[#024caa] hover:bg-blue-700 text-white px-6 py-2 rounded-md">Browse Compounds</a>
+                    </div>
+                </div>
+
+                <div data-aos="flip-up" data-aos-duration="1000" class="text-white py-12 mt-20 px-4 md:px-[10%] relative z-10">
+                    <!-- Carousel -->
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6">Flagship Compounds</h2>
+                    <div class="relative flex items-center justify-center gap-4">
+          
+                        <!-- Left Arrow -->
+                        <button id="carousel-left" class="z-10 bg-gray-700 hover:bg-[#024caa] text-white p-3 rounded-full shadow ">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            </svg>                          
+                        </button>
+                    
+                        <!-- Scroll Container -->
+                        <div id="carousel-container"
+                            class="
+                                flex overflow-hidden
+                                gap-x-6 
+                                w-md lg:w-xl xl:w-3xl 2xl:w-5xl
+                            
+                                "> <!--scroll-smooth  snap-x snap-mandatory  w-full max-w-[1024px]-->
+                    
+                            <% flagshipCompounds.forEach(compound => { %>
+                            <a href="#"
+                                class="
+                                    carousel-item shrink-0 snap-center bg-gray-900 border border-gray-700 rounded-lg 
+                                    hover:shadow-lg transition duration-300
+                                    ">
+                    
+                                <div class="p-4 flex flex-col items-center text-center w-full">
+                                    <h3 class="text-sm xl:text-md font-semibold mb-2 w-full"><%= compound.name %></h3>
+                        
+                                    <!-- Image with white square background and consistent size -->
+                                    <div class=" bg-gray-900 flex items-center justify-center p-4 mb-4 h-40 rounded-md w-full">
+                                        <img src="images/structures/pentachlorocyclopropane.svg"
+                                            alt="structure"
+                                            class="object-contain h-full max-w-full invert" />
+                                    </div>
+                        
+                                    <h4 class="mt-4 text-gray-400 text-sm w-full">CAS: <%= compound.casNumber %></h4>
+                                </div>
+                            </a>
+                            <% }) %>
+                    
+                        </div>
+          
+                        <!-- Right Arrow -->
+                        <button id="carousel-right" class="z-10 bg-gray-700 hover:bg-[#024caa] text-white p-3 rounded-full shadow">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            
+
+            <!--! Latest Compounds Table -->
+            <section class=" bg-gradient-to-b from-slate-900 to-gray-900 text-white pt-24 pb-20 px-4 z-0">
+                <!-- Optional top wave or gradient to blend with the hero section -->
+                <div class="absolute top-0 left-0 w-full h-16  z-[-1]"></div>
+            
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Latest Compounds</h2>
+                    <h3 class="hidden md:block"> Hover To See Structure </h3>
+                    <!-- Table Header -->
+                    <div class="hidden md:grid grid-cols-[8fr_1fr] *:flex *:justify-start *:items-lef gap-6 border-b border-gray-700 pb-4 mb-6 text-gray-400 uppercase text-sm tracking-wider">
+                        <div>Name</div>
+                        <div>CAS Number</div>
+                    </div>
+                
+                    <!-- Table Rows -->
+                    <div class="space-y-4" >
+                        <% let counter = 0 %>
+                        <% let duration = 300 %>
+                        <% let delay = 100 %>
+                        <% latestCompounds.forEach(compound => { %>
+                        <a 
+                            href="#"
+                            data-tippy-content=
+                                '<div class="w-64 ">
+                                    <img src="images/structures/pentachlorocyclopropane.svg" alt="Structure" 
+                                    class="invert w-full" />
+                                    <div class="text-white text-sm font-semibold"><%= compound.casNumber %></div>
+                                    <p class="text-gray-300 text-sm">Description goes here</p>
+                                  </div>'
+                            
+                            data-aos="fade-right" 
+                            data-aos-duration="<%= duration %>" 
+                            data-aos-delay="<%= delay * counter %>"
+                            data-aos-anchor-placement="bottom-bottom"
+                            class=
+                                "
+                                latest-compounds
+                                grid grid-cols-1  md:grid-cols-[8fr_1fr] *:flex *:justify-start *:items-left gap-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg p-5 
+                                transition duration-200
+                                group
+                                "
+                        >
+                            
+                            <div class="text-[#47a2ff] font-semibold text-lg"><%= compound.name %></div>
+                            <div class="text-gray-300 font-mono text-base md:text-right"><%= compound.casNumber %></div>
+                            
+
+                        </a>
+                        <% counter++ %>
+                        <% }) %>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+          
+            <!--! Why Chemten -->
+            <section class="bg-gray-950 py-20 px-4">
+                <div class="max-w-6xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-12 text-white">Why Chemten?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                
+                        <!-- Specialized Expertise -->
+                        <div data-aos="fade-up" data-aos-duration="800" data-aos-delay="0" class="bg-gray-900 p-6 rounded-lg border border-gray-800 shadow hover:shadow-lg transition">
+                            <div class="text-[#024caa] text-4xl mb-3">🧬</div>
+                            <h3 class="text-xl font-semibold text-white mb-2">Specialized Expertise</h3>
+                            <p class="text-gray-400">We focus on hard-to-find and advanced organic compounds, backed by deep chemical knowledge.</p>
+                        </div>
+                
+                        <!-- Reliable Delivery -->
+                        <div data-aos="fade-up" data-aos-duration="800" data-aos-delay="400" class="bg-gray-900 p-6 rounded-lg border border-gray-800 shadow hover:shadow-lg transition">
+                            <div class="text-[#024caa] text-4xl mb-3">🚀</div>
+                            <h3 class="text-xl font-semibold text-white mb-2">Reliable Delivery</h3>
+                            <p class="text-gray-400">We ensure timely shipping and global logistics for labs and industries around the world.</p>
+                        </div>
+                
+                        <!-- Quality Assurance -->
+                        <div data-aos="fade-up" data-aos-duration="800" data-aos-delay="800" class="bg-gray-900 p-6 rounded-lg border border-gray-800 shadow hover:shadow-lg transition">
+                            <div class="text-[#024caa] text-4xl mb-3">🧪</div>
+                            <h3 class="text-xl font-semibold text-white mb-2">Verified Quality</h3>
+                            <p class="text-gray-400">Every compound undergoes rigorous quality control — purity and consistency you can trust.</p>
+                        </div>
+                
+                    </div>
+                </div>
+            </section>
+  
+  
+            <!--! How It Works -->
+            <section class="bg-gray-900 py-16 px-4">
+                <div class="max-w-5xl mx-auto text-center">
+                    <h2 class="text-2xl font-bold mb-10 text-white">How It Works</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-left text-gray-300">
+                        <div><span class="font-bold text-white">1.</span> Search or browse our database.</div>
+                        <div><span class="font-bold text-white">2.</span> Submit your synthesis request.</div>
+                        <div><span class="font-bold text-white">3.</span> Get a quote and approve the process.</div>
+                        <div><span class="font-bold text-white">4.</span> Receive your compound securely.</div>
+                    </div>
+                </div>
+            </section>
+  
+            <!--! Call to Action -->
+            <section class="bg-[#024caa] text-white py-16 px-4 text-center">
+                <div class="max-w-3xl mx-auto">
+                    <h2 class="text-3xl font-bold mb-4">Need something rare or complex?</h2>
+                    <p class="mb-6 text-lg text-blue-100">We specialize in what others can't provide. Let's talk.</p>
+                    <a href="/contact" class="bg-white text-[#024caa] font-semibold px-6 py-3 rounded-md hover:bg-gray-200">
+                        Request Custom Synthesis
+                    </a>
+                </div>
+            </section>
+        </main>
+        
+        <%- include('../partials/footer.ejs') %>
+
+        <!-- Page-specific scripts -->    
+         
+            <!-- Tippy (For tooltips)-->    
+            <script src="https://unpkg.com/@popperjs/core@2"></script>
+            <script src="https://unpkg.com/tippy.js@6"></script>
+            <script>
+                tippy('.latest-compounds', {
+                  allowHTML: true,
+                  interactive: true,
+                  placement: 'top',
+                  theme: 'latest-compounds-tooltip',
+                  appendTo: () => document.body,            // → Always append tooltip to <body>
+                });
+              </script>
+
+
+        <script src="js/indexCarousel.js"></script>
+
+
+        <% if (typeof scripts !== 'undefined') { %>
+            <%- scripts %>
+        <% } %>
+
+    </body>   
+</html>

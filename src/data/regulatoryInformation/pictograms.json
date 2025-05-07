@@ -1,0 +1,11 @@
+[
+    { "id": "GHS01", "label": "Explosive", "link": "ghs01.png" },
+    { "id": "GHS02", "label": "Flame", "link": "ghs02.png" },
+    { "id": "GHS03", "label": "Flame over Circle", "link": "ghs03.png" },
+    { "id": "GHS04", "label": "Gas Cylinder", "link": "ghs04.png" },
+    { "id": "GHS05", "label": "Corrosion", "link": "ghs05.png" },
+    { "id": "GHS06", "label": "Skull and Crossbones", "link": "ghs06.png" },
+    { "id": "GHS07", "label": "Exclamation Mark", "link": "ghs07.png" },
+    { "id": "GHS08", "label": "Health Hazard", "link": "ghs08.png" },
+    { "id": "GHS09", "label": "Environment", "link": "ghs09.png" }
+]

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../partials/header.ejs') %>
+<body class="bg-gray-100 text-center">
+    <%- include('../../partials/navbar.ejs') %>
+
+    <div class="table-container">
+
+        <!-- Title -->
+        <div class="table-title col-span-2"> All Compounds </div>
+
+        <!-- Header -->
+        <div class="grid grid-cols-[1fr_4fr] table-header">
+          <div>CAS Number</div>
+          <div>Name</div>
+        </div>
+      
+        <!-- Rows -->
+    <% compounds.forEach(compound => { %>
+    <a href="/compounds/<%= compound.casNumber %>" class="block">
+      <div class="grid grid-cols-[1fr_4fr] table-rows products-table-rows">
+        <div class="border-r-2 border-white"><%= compound.casNumber %></div>
+        <div><%= compound.name %></div>
+      </div>
+    </a>
+  <% }) %>
+    </div>
+
+
+    <div class="flex gap-2 justify-center mt-6">
+        <% if (currentPage > 1) { %>
+          <a href="?page=<%= currentPage - 1 %>" class="px-3 py-1 border rounded hover:bg-gray-100">Prev</a>
+        <% } %>
+      
+        <% for (let p = 1; p <= totalPages; p++) { %>
+          <% if (p === currentPage) { %>
+            <span class="px-3 py-1 bg-black text-white rounded border border-blue-600"><%= p %></span>
+          <% } else { %>
+            <a href="?page=<%= p %>" class="px-3 py-1 border rounded hover:bg-gray-100"><%= p %></a>
+          <% } %>
+        <% } %>
+      
+        <% if (currentPage < totalPages) { %>
+          <a href="?page=<%= currentPage + 1 %>" class="px-3 py-1 border rounded hover:bg-gray-100">Next</a>
+        <% } %>
+      </div>
+
+
+
+    <%- include('../../partials/footer.ejs') %>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+{
+    "level1": [
+        {
+          "id": "acid-halides",
+          "label": "Acid halides (chlorides)"
+        },
+        {
+          "id": "alcohols-phenols",
+          "label": "Alcohols / Alkoxides / Phenols / Hydroxy compounds"
+        },
+        {
+          "id": "amines",
+          "label": "Amines / Amine salts / Imines"
+        },
+        {
+          "id": "azides",
+          "label": "Azides"
+        },
+        {
+          "id": "boronic-derivatives",
+          "label": "Boronic acids derivatives"
+        },
+        {
+          "id": "carbamates",
+          "label": "Carbamic acid derivatives / Carbamates / Carbamoyl chlorides / Thiocarbamoyl chlorides"
+        },
+        {
+          "id": "aldehydes",
+          "label": "Carboxaldehydes / Acetals / Hemianimals"
+        },
+        {
+          "id": "amides",
+          "label": "Carboxamides / Thioamides / Imidates"
+        },
+        {
+          "id": "acid-derivatives",
+          "label": "Carboxylic acid derivatives / Anhydrides / Imides / Hydrazides"
+        },
+        {
+          "id": "esters-lactones",
+          "label": "Carboxylic acid esters / Lactones"
+        },
+        {
+          "id": "carboxylic-acids",
+          "label": "Carboxylic acids / salts"
+        },
+        {
+          "id": "chiral-ligands",
+          "label": "Chiral ligands"
+        },
+        {
+          "id": "chiral-metal",
+          "label": "Chiral metal complexes / organometallics"
+        },
+        {
+          "id": "chloroformates",
+          "label": "Chloroformates"
+        },
+        {
+          "id": "ethers",
+          "label": "Ethers / Alkoxy group containing compounds"
+        },
+        {
+          "id": "halides",
+          "label": "Halides / Halide containing compounds"
+        },
+        {
+          "id": "hydrazines",
+          "label": "Hydrazines"
+        },
+        {
+          "id": "inorganic",
+          "label": "Inorganic compounds"
+        },
+        {
+          "id": "inorganic-salts",
+          "label": "Inorganic salts"
+        },
+        {
+          "id": "isocyanates",
+          "label": "Isocyanates"
+        },
+        {
+          "id": "isocyanides",
+          "label": "Isocyanides"
+        },
+        {
+          "id": "isothiocyanates",
+          "label": "Isothiocyanates / thiocyanates"
+        },
+        {
+          "id": "ketones",
+          "label": "Ketones / Ketals / Aminals"
+        },
+        {
+          "id": "n-oxides",
+          "label": "N-oxides / Nitroso compounds"
+        },
+        {
+          "id": "nitriles",
+          "label": "Nitriles"
+        },
+        {
+          "id": "nitro",
+          "label": "Nitro group-containing compounds"
+        },
+        {
+          "id": "nitroso",
+          "label": "Nitroso group-containing compounds"
+        },
+        {
+          "id": "epoxides",
+          "label": "Oxiranes / Thiiranes"
+        },
+        {
+          "id": "phosphorus",
+          "label": "Phosphorus reagents"
+        },
+        {
+          "id": "silanes",
+          "label": "Silanes / Siloxanes"
+        },
+        {
+          "id": "sugar-derivatives",
+          "label": "Sugar derivatives"
+        },
+        {
+          "id": "sulfides-thiols",
+          "label": "Sulfides / Thiols"
+        },
+        {
+          "id": "sulfur-acid-derivatives",
+          "label": "Sulfonic / Sulfinic / Sulfamic / Sulfurous acid derivatives"
+        },
+        {
+          "id": "sulfonyl-amides",
+          "label": "Sulfonyl amides"
+        },
+        {
+          "id": "sulfonyl-chlorides",
+          "label": "Sulfonyl chlorides"
+        },
+        {
+          "id": "sulfoxides",
+          "label": "Sulfoxides / Sulfones"
+        },
+        {
+          "id": "ureas",
+          "label": "Urea / Thiourea derivatives / Guanidines"
+        }
+    ],
+    "level2": [
+        {
+            "id": "aliphatics",
+            "label": "Aliphatic Compounds"
+          },
+          {
+            "id": "aromatics",
+            "label": "Aromatic Compounds"
+          }
+    ],
+    "level3": [
+        {
+            "id": "homocycle",
+            "label": "Homocycle (not a heterocycle)"
+        },
+        {
+            "id": "n-heterocycle",
+            "label": "N-containing heterocycle"
+        },
+        {
+            "id": "o-heterocycle",
+            "label": "O-containing heterocycle"
+        },
+        {
+            "id": "s-heterocycle",
+            "label": "S-containing heterocycle"
+        },
+        {
+            "id": "mixed-heterocycle",
+            "label": "Mixed heterocycle (N/O/S)"
+        }
+]
+}

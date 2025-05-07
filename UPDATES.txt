@@ -1,0 +1,3 @@
+
+V7
+- wont use flowbite, for popovers, lets install tippy.js

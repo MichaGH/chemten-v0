@@ -1,0 +1,9 @@
+.tippy-box[data-theme~='latest-compounds-tooltip'] {
+    background-color: #111827; /* Tailwind slate-800 */
+    z-index: 999;
+  }
+  
+  
+  .tippy-box[data-theme~='latest-compounds-tooltip'] .tippy-arrow {
+    color: #1118;
+  }

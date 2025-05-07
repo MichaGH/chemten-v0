@@ -1,0 +1,189 @@
+<!-- Toast UI Editor Styles -->
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+<!-- Toast UI Editor Script -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+<div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-xl font-bold mb-4">Compound Test Form</h1>
+
+        <form id="compound-form" action="/compounds/new" method="POST">
+            <!--! Name -->
+            <div class="mb-5">
+                <label for="name" class="block mb-2  text-lg font-medium">Name</label>
+                <input type="text" id="name" name="name" class="w-full border px-3 py-2 rounded" placeholder="Compound name">
+            </div>
+
+            <!--! Synonyms-->
+            <div class="mb-5">
+                <label for="synonyms" class="block mb-2  text-lg font-medium">Synonyms</label>
+                <input type="text" id="synonyms" name="synonyms" class="w-full border px-3 py-2 rounded" placeholder="synonyms">
+            </div>
+
+            <!--! Description-->
+            <div class="mb-5">
+                <label for="description" class="block mb-2  text-lg font-medium">Description</label>
+                <!-- Hidden textarea to store the actual markdown -->
+                <textarea id="description" name="description" class="hidden"></textarea>
+
+                <!-- Editor container -->
+                <div id="toast-editor" class="mb-6"></div>
+            </div>
+
+
+            <!--! CAS Number -->
+            <div class="mb-5">
+                <label for="cas" class="block mb-2  text-lg font-medium">CAS Number</label>
+                <input type="text" id="cas" name="cas" class="w-full border px-3 py-2 rounded" placeholder="e.g. 58-08-2">
+                <p id="cas-error" class="text-red-500 hidden">Invalid CAS number</p>
+            </div>
+
+            <!--! Molecular Formula -->
+            <div class="mb-5">
+                <label for="formula" class="block mb-2  text-lg font-medium">Molecular Formula</label>
+                <input type="text" id="formula" name="formula" class="w-full border px-3 py-2 rounded" placeholder="e.g. C8H10N4O2">
+                <p id="formula-error" class="text-red-500 hidden">Invalid formula</p>
+            </div>
+
+            <!--! Molecular Weight -->
+            <div class="mb-5">
+                <label for="molecular-weight" class="block mb-2   text-lg font-medium">Molecular Weight</label>
+                <div class="flex gap-2">
+                <input type="text" id="molecular-weight" name="molecularWeight" class="flex-1 border px-3 py-2 rounded bg-gray-100" readonly>
+                <button type="button" id="calc-weight-btn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Calculate
+                </button>
+                </div>
+            </div>
+
+            <!--! categories -->
+            <div class="space-y-4 mb-5">
+                <div class="block  text-lg font-medium">Compound Categories</div>
+                <% Object.entries(categories).forEach(([level, items]) => { %>
+                <div class="border rounded-lg overflow-hidden">
+                    <button
+                    type="button"
+                    class="w-full text-left px-4 py-2 bg-gray-200 font-semibold"
+                    onclick="toggleCollapse('<%= level %>-content')"
+                    >
+                    <%= "Level " + level.slice(-1) %>
+                    </button>
+                    <div id="<%= level %>-content" class="hidden px-4 py-2 space-y-1">
+                    <% items.forEach(item => { %>
+                        <div class="flex items-center">
+                        <input
+                            type="checkbox"
+                            name="categories[<%= level %>][]"
+                            id="<%= level %>-<%= item.id %>"
+                            value="<%= JSON.stringify({ id: item.id, label: item.label }) %>"
+                            class="mr-2"
+                            <%= level === 'level1' ? '' : '' %> 
+                        >
+                        <label for="<%= level %>-<%= item.id %>" class="text-left leading-snug"><%= item.label %></label>
+                        </div>
+                    <% }) %>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+                
+            <!--! Safety Phrases Section -->
+            <div class="space-y-4 mb-5">
+                <div class="block font-medium  text-lg">Safety Phrases</div>
+            
+                <!-- H-Phrases -->
+                <div class="border rounded-lg overflow-hidden">
+                <button
+                    type="button"
+                    class="w-full text-left px-4 py-2 bg-gray-200 font-semibold"
+                    onclick="toggleCollapse('hPhrases-content')"
+                >
+                    H-Phrases (Hazard Statements)
+                </button>
+                <div id="hPhrases-content" class="hidden px-4 py-2 space-y-1 max-h-[500px] overflow-y-auto">
+                    <% hPhrases.forEach(item => { %>
+                    <div class="flex items-start gap-2">
+                        <input
+                        type="checkbox"
+                        name="hPhrases[]"
+                        id="h-<%= item.id %>"
+                        value='<%= JSON.stringify({ id: item.id, description: item.description }) %>'
+                        class="mt-1"
+                        >
+                        <label for="h-<%= item.id %>" class="text-left leading-snug w-full">
+                        <strong><%= item.id %></strong>: <%= item.description %>
+                        </label>
+                    </div>
+                    <% }) %>
+                </div>
+                </div>
+
+                <!-- P-Phrases -->
+                <div class="border rounded-lg overflow-hidden">
+                <button
+                    type="button"
+                    class="w-full text-left px-4 py-2 bg-gray-200 font-semibold"
+                    onclick="toggleCollapse('pPhrases-content')"
+                >
+                    P-Phrases (Precautionary Statements)
+                </button>
+                <div id="pPhrases-content" class="hidden px-4 py-2 space-y-1 max-h-[500px] overflow-y-auto">
+                    <% pPhrases.forEach(item => { %>
+                    <div class="flex items-start">
+                        <input
+                        type="checkbox"
+                        name="pPhrases[]"
+                        id="p-<%= item.id %>"
+                        value='<%= JSON.stringify({ id: item.id, description: item.description }) %>'
+                        class="mr-2 mt-1"
+                        >
+                        <label for="p-<%= item.id %>" class="text-left leading-snug">
+                        <strong><%= item.id %></strong>: <%= item.description %>
+                        </label>
+                    </div>
+                    <% }) %>
+                </div>
+                </div>
+                <div class="mb-6">
+                    <h2 class="font-semibold mb-5">Pictograms</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <% pictograms.forEach(item => { %>
+                        <label class="flex flex-col items-center space-y-2 cursor-pointer">
+                        <input 
+                        type="checkbox" 
+                        name="pictograms[]" 
+                        value='<%= JSON.stringify({ id: item.id, label: item.label, link: item.link }) %>'
+                        class="mb-1"
+                        >
+                        <img src="/images/pictograms/<%= item.link %>" alt="<%= item.label %>" class="w-16 h-16 object-contain">
+                        <div class="text-center text-sm">
+                            <strong><%= item.id %></strong><br>
+                            <%= item.label %>
+                        </div>
+                        </label>
+                    <% }) %>
+                    </div>
+            </div>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded mt-8 ">Submit</button>
+        </form>
+      
+      
+
+  </div>
+  
+  <script src="/js/compoundForm/compoundFormMenuCollapse.js"></script>
+  <script src="/js/compoundForm/compoundFormValidation.js"></script>
+  <script>
+    const editor = new toastui.Editor({
+      el: document.querySelector('#toast-editor'),
+      height: '400px',
+      initialEditType: 'markdown',
+      previewStyle: 'vertical',
+      placeholder: 'Write description here...',
+    });
+  
+    // Sync the markdown content to hidden textarea on submit
+    document.getElementById('compound-form').addEventListener('submit', function () {
+      document.getElementById('description').value = editor.getMarkdown();
+    });
+  </script>

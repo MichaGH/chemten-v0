@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include('../../partials/header.ejs') %>
+	<body class="bg-gray-100 text-center">
+		<%- include('../../partials/navbar.ejs') %>
+        <section class="bg-white py-12 px-4 text-gray-900">
+            <div class="max-w-6xl mx-auto space-y-12">
+              <!-- Compound Overview -->
+              <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                <div class="bg-gray-100 px-6 py-4 text-xl font-semibold border-b"> <%= compound.name %> </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x">
+                  <div class="p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">Synonyms</div>
+                    <div class="text-base text-gray-800"><%= compound.synonyms %></div>
+                  </div>
+                  <div class="p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">CAS</div>
+                    <div class="text-base text-gray-800"><%= compound.casNumber %></div>
+                  </div>
+                  <div class="p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">Formula</div>
+                    <div class="text-base text-gray-800"><%= compound.molecularFormula %></div>
+                  </div>
+                  <div class="p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">Molecular Weight</div>
+                    <div class="text-base text-gray-800"><%= compound.molecularWeight %></div>
+                  </div>
+                  <div class="col-span-full p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">Description</div>
+                    <div class="text-base text-gray-800"><%= compound.description %></div>
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Product Variants -->
+              <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                <div class="bg-gray-100 px-6 py-4 text-xl font-semibold border-b">Our Products</div>
+                <div class="grid grid-cols-4 bg-gray-50 px-4 py-2 text-sm font-semibold text-gray-700">
+                  <div>CAS Number</div>
+                  <div>Name</div>
+                  <div>Quality</div>
+                  <div>Availability</div>
+                </div>
+                <% compound.products.forEach(product => { %>
+                <div class="grid grid-cols-4 px-4 py-2 border-t text-sm">
+                  <div><%= compound.casNumber %></div>
+                  <div><%= compound.name %></div>
+                  <div><%= product.quality %> %</div>
+                  <div class="text-blue-600">Ask for Inquiry</div>
+                </div>
+                <% }) %>
+              </div>
+          
+              <!-- Regulatory Information -->
+              <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                <div class="bg-gray-100 px-6 py-4 text-xl font-semibold border-b">Regulatory Information</div>
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                  <div class="p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">SDS Sheet</div>
+                    <div class="text-base text-gray-800"><%= compound.regulatoryInformation.sdsSheet %></div>
+                  </div>
+                  <div class="p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">Pictograms</div>
+                    <div class="text-base text-gray-800">
+                      <% compound.regulatoryInformation.pictograms.forEach(pictogram => { %>
+                        <%= pictogram %>
+                      <% }) %>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">H-Phrases</div>
+                    <div class="text-base text-gray-800">
+                      <% compound.regulatoryInformation.hPhrases.forEach(hPhrase => { %>
+                        <%= hPhrase %>
+                      <% }) %>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">P-Phrases</div>
+                    <div class="text-base text-gray-800">
+                      <% compound.regulatoryInformation.pPhrases.forEach(pPhrase => { %>
+                        <%= pPhrase %>
+                      <% }) %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Categories -->
+              <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                <div class="bg-gray-100 px-6 py-4 text-xl font-semibold border-b">Categories</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x">
+                  <div class="p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">Level 1</div>
+                    <div class="flex flex-wrap gap-2">
+                      <% compound.categories.level1.forEach(cat => { %>
+                        <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded"> <%= cat.label %> </span>
+                      <% }) %>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">Level 2</div>
+                    <div class="flex flex-wrap gap-2">
+                      <% compound.categories.level2.forEach(cat => { %>
+                        <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded"> <%= cat.label %> </span>
+                      <% }) %>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <div class="text-sm font-medium text-gray-500 mb-1">Level 3</div>
+                    <div class="flex flex-wrap gap-2">
+                      <% compound.categories.level3.forEach(cat => { %>
+                        <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded"> <%= cat.label %> </span>
+                      <% }) %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Debug/Test Zone -->
+              <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                <div class="bg-gray-100 px-6 py-4 text-xl font-semibold border-b">Test Zone</div>
+                <div class="p-4 text-sm text-gray-700">
+                  <p>compound.categories.level1 : <%= compound.categories.level1 %></p>
+                  <p>compound.regulatoryInformation : <%= compound.regulatoryInformation %></p>
+                </div>
+              </div>
+            </div>
+          </section>
+		<%= compound.categories.level1 %> <%- include('../../partials/footer.ejs') %>
+	</body>
+</html>
