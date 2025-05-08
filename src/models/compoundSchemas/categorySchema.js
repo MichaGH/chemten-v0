@@ -33,7 +33,7 @@ function getCategoryItemSchema(level) {
                 }
             }
         }
-    })
+    }, { _id: false })
 }
 
 
@@ -45,7 +45,7 @@ const categorySchema = new Schema(
 		level2: [getCategoryItemSchema(2)],
 		level3: [getCategoryItemSchema(3)],
 	},
-	{ timestamps: true }
+	{ timestamps: true, _id: false }
 );
 
 module.exports = categorySchema;

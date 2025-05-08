@@ -13,7 +13,7 @@
     npm run start
 ----------------------    
 📁 Folder Structure:
-    📦Template 3
+    📦
     ┣ 📂public                 - Static Files
     ┃ ┣ 📂css                      - CSS Files
     ┃ ┃ ┗ 📜styles.css                 - Tailwind output 

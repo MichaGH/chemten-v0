@@ -1,25 +1,32 @@
-<!-- Toast UI Editor Styles -->
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../partials/headerAdmin.ejs') %>
+<body class="bg-gray-100 text-center">
+    <%- include('../../partials/navbarAdmin.ejs') %>
+
+    <!--! ACTION FORM -->
+    <!-- Toast UI Editor Styles -->
+
 
 <!-- Toast UI Editor Script -->
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
 
 <div class="max-w-4xl mx-auto bg-gray-900 text-gray-100 p-8 rounded-2xl shadow-xl">
-    <h1 class="text-2xl font-semibold mb-6">Create New Compound</h1>
+    <h1 class="text-2xl font-semibold mb-6"><%= formTitle %></h1>
   
-    <form id="compound-form" action="/compounds/new" method="POST" class="space-y-8">
+    <form id="compound-form" action="<%= formAction %>" method="POST" class="space-y-8">
   
       <!-- Name + Synonyms -->
       <div class="grid grid-cols-1 gap-6">
         <div>
           <label for="name" class="block text-sm font-medium mb-1">Name</label>
-          <input type="text" id="name" name="name"
+          <input type="text" id="name" name="name" value="<%= compound ? compound.name : '' %>"
                  class="w-full rounded-xl border border-gray-700 bg-gray-800 px-4 py-3 text-white focus:ring-2 focus:ring-blue-500"
                  placeholder="e.g. Benzene">
         </div>
         <div>
           <label for="synonyms" class="block text-sm font-medium mb-1">Synonyms</label>
-          <input type="text" id="synonyms" name="synonyms"
+          <input type="text" id="synonyms" name="synonyms" value="<%= compound ? compound.synonyms : '' %>"
                  class="w-full rounded-xl border border-gray-700 bg-gray-800 px-4 py-3 text-white focus:ring-2 focus:ring-blue-500"
                  placeholder="Alternate names">
         </div>
@@ -27,6 +34,8 @@
       
       <!-- File Upload Section -->
 <div class="space-y-4">
+    
+
     <label for="structure-image" class="block text-sm font-medium mb-2">Structure Image</label>
     
     <!-- Upload New Image -->
@@ -47,7 +56,7 @@
       <!-- Description -->
       <div>
         <label for="description" class="block text-sm font-medium mb-2">Description</label>
-        <textarea id="description" name="description" class="hidden"></textarea>
+        <textarea id="description" name="description" class="hidden"><%= compound ? compound.description : ''%></textarea>
         <div id="toast-editor" class="rounded-xl border border-gray-700 bg-gray-800 p-4 shadow-sm"></div>
       </div>
   
@@ -55,7 +64,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
           <label for="cas" class="block text-sm font-medium mb-1">CAS Number</label>
-          <input type="text" id="cas" name="cas"
+          <input type="text" id="cas" name="cas" value="<%= compound ? compound.casNumber : '' %>"
                  class="w-full rounded-xl border border-gray-700 bg-gray-800 px-4 py-3 text-white focus:ring-2 focus:ring-blue-500"
                  placeholder="e.g. 108-88-3">
           <p id="cas-error" class="text-sm text-red-400 mt-1 hidden">Invalid CAS number</p>
@@ -63,7 +72,7 @@
   
         <div>
           <label for="formula" class="block text-sm font-medium mb-1">Molecular Formula</label>
-          <input type="text" id="formula" name="formula"
+          <input type="text" id="formula" name="formula" value="<%= compound ? compound.molecularFormula : '' %>"
                  class="w-full rounded-xl border border-gray-700 bg-gray-800 px-4 py-3 text-white focus:ring-2 focus:ring-blue-500"
                  placeholder="e.g. C6H6">
           <p id="formula-error" class="text-sm text-red-400 mt-1 hidden">Invalid formula</p>
@@ -72,7 +81,7 @@
         <div>
           <label for="molecular-weight" class="block text-sm font-medium mb-1">Molecular Weight</label>
           <div class="flex">
-            <input type="text" id="molecular-weight" name="molecularWeight" readonly
+            <input type="text" id="molecular-weight" name="molecularWeight" readonly value="<%= compound ? compound.molecularWeight : '' %>"
                    class="w-full rounded-l-xl border border-gray-700 bg-gray-700 px-4 py-3 text-white">
             <button type="button" id="calc-weight-btn"
                     class="rounded-r-xl bg-blue-600 px-4 py-3 text-white hover:bg-blue-700 transition whitespace-nowrap">
@@ -87,6 +96,8 @@
         <h2 class="text-lg font-semibold mb-4">Categories</h2>
         <div class="space-y-4">
           <% Object.entries(categories).forEach(([level, items]) => { %>
+            <% let selectedCategories = compound ? compound.categories[level] || [] : []; %>
+
           <div class="rounded-xl border border-gray-700 bg-gray-800">
             <button type="button"
                     class="w-full text-left px-4 py-3 font-medium hover:bg-gray-700 rounded-xl"
@@ -98,7 +109,9 @@
               <label class="flex items-center gap-2">
                 <input type="checkbox" name="categories[<%= level %>][]" id="<%= level %>-<%= item.id %>"
                        value='<%= JSON.stringify({ id: item.id, label: item.label }) %>'
-                       class="accent-blue-500">
+                       class="accent-blue-500"
+                       <%=selectedCategories.some(cat => cat.id === item.id) ? 'checked' : ''%>
+                       >
                 <span><%= item.label %></span>
               </label>
               <% }) %>
@@ -120,9 +133,17 @@
             H-Phrases (Hazards)
           </button>
           <div id="hPhrases-content" class="hidden px-4 py-3 space-y-2 max-h-[400px] overflow-y-auto">
+            <% let selectedhPhrases = compound ? compound.regulatoryInformation.hPhrases || [] : []; %>
+
             <% hPhrases.forEach(item => { %>
             <label class="flex items-start gap-2">
-              <input type="checkbox" name="hPhrases[]" value='<%= JSON.stringify({ id: item.id, description: item.description }) %>' class="mt-1 accent-blue-500">
+                <input 
+                    type="checkbox" 
+                    name="hPhrases[]" 
+                    value='<%= JSON.stringify({ id: item.id, description: item.description }) %>' 
+                    class="mt-1 accent-blue-500"
+                    <%=selectedhPhrases.some(hPhrase => hPhrase.id === item.id) ? 'checked' : ''%>
+                    >
               <span><strong><%= item.id %></strong>: <%= item.description %></span>
             </label>
             <% }) %>
@@ -137,9 +158,17 @@
             P-Phrases (Precautions)
           </button>
           <div id="pPhrases-content" class="hidden px-4 py-3 space-y-2 max-h-[400px] overflow-y-auto">
+            <% let selectedpPhrases = compound ? compound.regulatoryInformation.pPhrases || [] : []; %>
+            
             <% pPhrases.forEach(item => { %>
             <label class="flex items-start gap-2">
-              <input type="checkbox" name="pPhrases[]" value='<%= JSON.stringify({ id: item.id, description: item.description }) %>' class="mt-1 accent-blue-500">
+                <input 
+                    type="checkbox" 
+                    name="pPhrases[]" 
+                    value='<%= JSON.stringify({ id: item.id, description: item.description }) %>' 
+                    class="mt-1 accent-blue-500"
+                    <%=selectedpPhrases.some(pPhrase => pPhrase.id === item.id) ? 'checked' : ''%>
+                    >
               <span><strong><%= item.id %></strong>: <%= item.description %></span>
             </label>
             <% }) %>
@@ -151,10 +180,18 @@
       <div>
         <h2 class="text-lg font-semibold mb-4">Pictograms</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+            <% let selectedPictograms = compound ? compound.regulatoryInformation.pictograms|| [] : []; %>
+
           <% pictograms.forEach(item => { %>
           <label class="flex flex-col items-center gap-2 bg-gray-800 p-4 rounded-xl border border-gray-700 hover:border-blue-500 transition cursor-pointer">
-            <input type="checkbox" name="pictograms[]" value='<%= JSON.stringify({ id: item.id, label: item.label, link: item.link }) %>'
-                   class="accent-blue-500">
+            <input 
+                type="checkbox" 
+                name="pictograms[]" 
+                value='<%= JSON.stringify({ id: item.id, label: item.label, link: item.link }) %>'
+                class="accent-blue-500"
+                <%=selectedPictograms.some(pictogram => pictogram.id === item.id) ? 'checked' : ''%>
+
+                >
             <img src="/images/pictograms/<%= item.link %>" alt="<%= item.label %>" class="w-16 h-16 object-contain">
             <div class="text-sm text-center">
               <strong><%= item.id %></strong><br>
@@ -176,40 +213,60 @@
   </div>
   
   
-  <script src="/js/compoundForm/compoundFormMenuCollapse.js"></script>
-  <script src="/js/compoundForm/compoundFormValidation.js"></script>
-  <script>
-    const editor = new toastui.Editor({
-      el: document.querySelector('#toast-editor'),
-      height: '400px',
-      initialEditType: 'markdown',
-      previewStyle: 'vertical',
-      placeholder: 'Write description here...',
+
+
+<%- include('../../partials/footerAdmin.ejs') %>
+<script src="/js/compoundForm/compoundFormMenuCollapse.js"></script>
+<script src="/js/compoundForm/compoundFormValidation.js"></script>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+
+
+    const descriptionEditor = new toastui.Editor({
+        el: document.querySelector('#toast-editor'),
+        height: '800px',
+        initialEditType: 'markdown',
+        previewStyle: 'tab',
+        placeholder: 'Write description here...',
+        theme: 'dark',
+        language: 'en'
     });
-  
-    // Sync the markdown content to hidden textarea on submit
+
+    // <textarea> is hidden & compound prop isn't available to <script> tags
+    // SOLUTION:
+    // - inject the compound.description into <textarea></textarea>
+    // - pass it into <script> using .innerHTML
+    // - inject into editor using setMarkdown 
+    
+    const compoundDescription = document.getElementById('description').innerHTML;
+    descriptionEditor.setMarkdown(compoundDescription);
+
+
+
     document.getElementById('compound-form').addEventListener('submit', function () {
-      document.getElementById('description').value = editor.getMarkdown();
+        document.getElementById('description').value = descriptionEditor.getMarkdown();
     });
 
 
-    // IMAGE
+  // IMAGE
 
-    // Image Preview Function
+  // Image Preview Function
 const imageInput = document.getElementById('structure-image');
 const imagePreview = document.getElementById('image-preview');
 const uploadedImage = document.getElementById('uploaded-image');
 
 imageInput.addEventListener('change', function(event) {
-  const file = event.target.files[0];
-  
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      uploadedImage.src = e.target.result;
-      imagePreview.classList.remove('hidden');  // Show preview
-    }
-    reader.readAsDataURL(file);
+const file = event.target.files[0];
+
+if (file) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    uploadedImage.src = e.target.result;
+    imagePreview.classList.remove('hidden');  // Show preview
   }
+  reader.readAsDataURL(file);
+}
 });
-  </script>
+</script>
+  </body>
+</html>

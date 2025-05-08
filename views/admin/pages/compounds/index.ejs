@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../partials/headerAdmin.ejs') %>
+  <body class="bg-gray-900 text-white">
+
+    <%- include('../../partials/navbarAdmin.ejs') %>
+
+    <!-- Sorting & Filters Section -->
+    <div class="p-6 bg-gray-800 rounded-md mt-10 mb-6 mx-auto max-w-5xl">
+      <h3 class="text-lg font-semibold mb-4">Filter and Sort Compounds</h3>
+
+      <div class="flex gap-4">
+        <!-- Sort By Dropdown -->
+        <div class="flex-1">
+          <label for="sortBy" class="block text-sm font-medium">Sort By</label>
+          <select id="sortBy" class="mt-1 p-2 w-full bg-gray-700 text-white rounded-md border-gray-600 focus:ring-indigo-500 focus:border-indigo-500">
+            <option value="casNumber">CAS Number</option>
+            <option value="name">Name</option>
+          </select>
+        </div>
+
+        <!-- Hide Structure Images Checkbox -->
+        <div class="flex items-center space-x-2">
+          <input type="checkbox" id="hideImages" class="form-checkbox text-indigo-600" />
+          <label for="hideImages" class="text-sm">Hide Structure Images</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="overflow-x-auto bg-gray-800 p-6 rounded-md shadow-md mx-auto max-w-5xl">
+      <!-- Table Title -->
+      <div class="text-2xl font-semibold mb-4">All Compounds</div>
+
+      <!-- Table Header -->
+      <div class="grid grid-cols-[3fr_6fr_1fr_1fr] text-gray-200 text-sm uppercase mb-2 border-b-2 border-gray-700">
+        <div>Structure Image</div>
+        <div>Name</div>
+        <div>CAS Number</div>
+        <div>Products</div>
+      </div>
+
+      <!-- Table Rows -->
+      <% compounds.forEach(compound => { %>
+        <a href="/admin/compounds/<%= compound.casNumber %>" class="block">
+          <div class="grid grid-cols-[6fr_12fr_4fr_4fr] table-rows products-table-rows bg-gray-900 hover:bg-gray-600 p-3 rounded-md transition duration-200 ease-in-out text-sm">
+            <!-- Structure Image -->
+            <div class="border-r-2 border-gray-600">
+              <img src="/images/structures/<%=compound.structure%>" alt="Structure" class="w-24 h-24 object-contain mx-auto invert" />
+            </div>
+
+            <!-- Name -->
+            <div class="text-gray-200 text-lg"><%= compound.name %></div>
+
+            <!-- CAS Number -->
+            <div class="border-r-2 text-gray-200 text-lg border-gray-600"><%= compound.casNumber %></div>
+
+            <!-- Products -->
+            <div class="text-gray-200 text-lg">95%</div>
+          </div>
+        </a>
+      <% }) %>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="flex gap-2 justify-center mt-6">
+      <% if (currentPage > 1) { %>
+        <a href="?page=<%= currentPage - 1 %>" class="px-3 py-1 border rounded-md bg-gray-700 text-white hover:bg-gray-600">Prev</a>
+      <% } %>
+
+      <% for (let p = 1; p <= totalPages; p++) { %>
+        <% if (p === currentPage) { %>
+          <span class="px-3 py-1 bg-indigo-600 text-white rounded-md border border-indigo-500"><%= p %></span>
+        <% } else { %>
+          <a href="?page=<%= p %>" class="px-3 py-1 border rounded-md bg-gray-700 text-white hover:bg-gray-600"><%= p %></a>
+        <% } %>
+      <% } %>
+
+      <% if (currentPage < totalPages) { %>
+        <a href="?page=<%= currentPage + 1 %>" class="px-3 py-1 border rounded-md bg-gray-700 text-white hover:bg-gray-600">Next</a>
+      <% } %>
+    </div>
+
+    <%- include('../../partials/footerAdmin.ejs') %>
+  </body>
+</html>

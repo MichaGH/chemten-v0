@@ -12,6 +12,8 @@ const connectDB = require('./config/db.js')
 //! Connect to DB, then start the server
 console.time('Connected to DB in:');
 
+
+
 connectDB().then(() => {
 
     console.timeEnd('Connected to DB in:');

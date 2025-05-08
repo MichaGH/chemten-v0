@@ -27,7 +27,7 @@ function getPhraseSchema(phraseData) {
           message: props => `Description does not match ID: ${this.id}`
         }
       }
-    });
+    }, {_id: false });
   }
   const pictogramSchema = new Schema({
     id: {
@@ -62,13 +62,13 @@ function getPhraseSchema(phraseData) {
             message: props => `Invalid pictogram link: ${props.link}`
         }
     }
-  });
+  }, { _id: false });
 
   const regulatoryInfoSchema = new Schema({
     hPhrases: [getPhraseSchema(hPhrasesData)],
     pPhrases: [getPhraseSchema(pPhrasesData)],
     pictograms: [pictogramSchema]
-  });
+  }, { timestamps: true, _id: false });
       
 
 module.exports = regulatoryInfoSchema;

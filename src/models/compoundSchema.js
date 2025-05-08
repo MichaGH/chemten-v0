@@ -47,7 +47,7 @@ const compoundSchema = new Schema({
         required: true
     }
 
-}, {timestamps: true, })
+}, { timestamps: true })
 
 const Compound = mongoose.model('Compound', compoundSchema);
 module.exports= Compound;
